@@ -10,7 +10,8 @@
     "default_title": "Memos"
   },
   "background": {
-    "scripts": ["./background.js"]
+    "scripts": ["./background.js"],
+    "presisten": false
   },
   "icons": {
     "16": "logo-small.png",

@@ -203,19 +203,19 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/background.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/contextMenuAction.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/background.js":
-/*!***************************!*\
-  !*** ./src/background.js ***!
-  \***************************/
+/***/ "./src/contextMenuAction.js":
+/*!**********************************!*\
+  !*** ./src/contextMenuAction.js ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("chrome.contextMenus.removeAll();\nchrome.contextMenus.create({\n  id: 'addToMemo',\n  title: 'Add word to memo',\n  contexts: ['selection']\n});\nchrome.contextMenus.onClicked.addListener(function (info, tab) {\n  chrome.extension.sendMessage({\n    action: 'contextClicked',\n    payload: {\n      selectedText: info.selectionText\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/background.js?");
+eval("chrome.extension.onMessage.addListener(function (msg, sender) {\n  if (msg.action == 'contextClicked') {\n    console.log(msg.payload); // There should be call to the API:\n    // API should:\n    //    - Recongize language of selected text,\n    //    - Try to translate selected text,\n    //    - Add selected text and translation to db for particular user,\n    //    - Return translation\n    //    - When the translation is received, translation will be shown in window under the extension logo\n  }\n});\n\n//# sourceURL=webpack:///./src/contextMenuAction.js?");
 
 /***/ })
 
