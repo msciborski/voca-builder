@@ -5,7 +5,8 @@ module.exports = {
   mode: 'development',
   watch: 'true',
   entry: {
-    background: './src/background.js'
+    background: './src/background.js',
+    'content-script': './src/contextMenuAction.js'
   },
   module: {
     rules: [
@@ -35,7 +36,8 @@ module.exports = {
       port: 9090, // Which port use to create the server
       reloadPage: true, // Force the reload of the page also
       entries: { // The entries used for the content/background scripts
-        background: 'background' // *REQUIRED
+        background: 'background', // *REQUIRED
+        contentScript: 'content-script'
       }
     })
   ]
