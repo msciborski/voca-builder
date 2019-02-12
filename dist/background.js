@@ -215,7 +215,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("\n\n//# sourceURL=webpack:///./src/background.js?");
+eval("chrome.contextMenus.create({\n  id: 'addToMemo',\n  title: 'Add word to memo',\n  contexts: ['selection']\n});\n\n//# sourceURL=webpack:///./src/background.js?");
 
 /***/ })
 
