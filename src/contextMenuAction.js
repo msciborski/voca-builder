@@ -1,6 +1,7 @@
 chrome.extension.onMessage.addListener((msg, sender) => {
   if(msg.action == 'contextClicked') {
     console.log(msg.payload);
+    // TODO
     // There should be call to the API:
     // API should:
     //    - Recongize language of selected text,

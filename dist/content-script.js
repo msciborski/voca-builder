@@ -215,7 +215,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("chrome.extension.onMessage.addListener(function (msg, sender) {\n  if (msg.action == 'contextClicked') {\n    console.log(msg.payload); // There should be call to the API:\n    // API should:\n    //    - Recongize language of selected text,\n    //    - Try to translate selected text,\n    //    - Add selected text and translation to db for particular user,\n    //    - Return translation\n    //    - When the translation is received, translation will be shown in window under the extension logo\n  }\n});\n\n//# sourceURL=webpack:///./src/contextMenuAction.js?");
+eval("chrome.extension.onMessage.addListener(function (msg, sender) {\n  if (msg.action == 'contextClicked') {\n    console.log(msg.payload); // TODO\n    // There should be call to the API:\n    // API should:\n    //    - Recongize language of selected text,\n    //    - Try to translate selected text,\n    //    - Add selected text and translation to db for particular user,\n    //    - Return translation\n    //    - When the translation is received, translation will be shown in window under the extension logo\n  }\n});\n\n//# sourceURL=webpack:///./src/contextMenuAction.js?");
 
 /***/ })
 
