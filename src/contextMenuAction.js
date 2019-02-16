@@ -1,6 +1,9 @@
 chrome.extension.onMessage.addListener((msg, sender) => {
   if(msg.action == 'contextClicked') {
     console.log(msg.payload);
+    chrome.identity.getProfileUserInfo((userInfo) => {
+      console.log(userInfo);
+    })
     // There should be call to the API:
     // API should:
     //    - Recongize language of selected text,

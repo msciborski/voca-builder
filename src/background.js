@@ -1,3 +1,7 @@
+chrome.windows.onCreated.addListener(() => {
+  alert('Extension wita!');
+});
+
 chrome.contextMenus.removeAll();
 chrome.contextMenus.create({
   id: 'addToMemo',

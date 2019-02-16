@@ -1,10 +1,9 @@
 {
   "manifest_version": 2,
-
   "name": "Voca-builder",
   "description": "Voca-builder - your memos",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAprbokMBwHTK1QGf38oGKbx8I5ebMV7C7dikwkBxapcHeWJ4M4QJF8xiyWiczdcbK/0s9YGk4I+WMkmOP8MZrqCnxsrCeDyAY3JmEGogPyQUBIwA/v6sw1qdiPqIMsyDIGYZUTXmGT71hP3gdWP9TDItWNXgFJjfVu3ZC7ixjoPu5TjR+ooW8DTkxBabA1ktPBCiPkK1q6c2QDrTzaZVCkV77zCPQpnoR54KH7LoQMClflj85ZoHsTIPOcf/RtcjLopbvZ+8GyF5nNTFrDCIwc8jUIJG6juSrHb5pcZxoOWJ0yfjci/7VpyKT2ugE05CRlWOeVYDq30pIvdSsO28ffQIDAQAB",
   "version": "0.0.1",
-
   "browser_action": {
     "default_popup": "index.html",
     "default_title": "Memos"
@@ -20,6 +19,15 @@
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "permissions": [
-    "contextMenus"
-  ]
+    "contextMenus",
+    "identity",
+    "identity.email"
+  ],
+  "oauth2": {
+    "client_id": "101633050111-8hv1luijqs04e7vd4eetd8nesselqd9q.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  }
 }

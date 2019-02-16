@@ -215,7 +215,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("chrome.contextMenus.removeAll();\nchrome.contextMenus.create({\n  id: 'addToMemo',\n  title: 'Add word to memo',\n  contexts: ['selection']\n});\nchrome.contextMenus.onClicked.addListener(function (info, tab) {\n  chrome.extension.sendMessage({\n    action: 'contextClicked',\n    payload: {\n      selectedText: info.selectionText\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/background.js?");
+eval("chrome.windows.onCreated.addListener(function () {\n  alert('Extension wita!');\n});\nchrome.contextMenus.removeAll();\nchrome.contextMenus.create({\n  id: 'addToMemo',\n  title: 'Add word to memo',\n  contexts: ['selection']\n});\nchrome.contextMenus.onClicked.addListener(function (info, tab) {\n  chrome.extension.sendMessage({\n    action: 'contextClicked',\n    payload: {\n      selectedText: info.selectionText\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/background.js?");
 
 /***/ })
 
