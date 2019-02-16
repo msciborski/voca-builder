@@ -10,10 +10,15 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+  console.log(info, tab);
   chrome.extension.sendMessage({
     action: 'contextClicked',
     payload: {
       selectedText: info.selectionText
     }
   })
+});
+
+chrome.commands.onCommand.addListener(function(command) {
+  console.log('Command:', command);
 });
