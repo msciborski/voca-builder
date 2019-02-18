@@ -1,9 +1,15 @@
+import {memoServices} from './memoServices';
+
 chrome.extension.onMessage.addListener((msg, sender) => {
   if(msg.action == 'contextClicked') {
-    console.log(msg.payload);
+    let memo = msg.payload.selectedText;
+
     chrome.identity.getProfileUserInfo((userInfo) => {
-      console.log(userInfo);
+      let userId = userInfo.id;
+      memoServices.addMemo( userId, memo );
     })
+
+
     // There should be call to the API:
     // API should:
     //    - Recongize language of selected text,

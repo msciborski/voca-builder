@@ -212,10 +212,23 @@
 /*!**********************************!*\
   !*** ./src/contextMenuAction.js ***!
   \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("chrome.extension.onMessage.addListener(function (msg, sender) {\n  if (msg.action == 'contextClicked') {\n    console.log(msg.payload);\n    chrome.identity.getProfileUserInfo(function (userInfo) {\n      console.log(userInfo);\n    }); // There should be call to the API:\n    // API should:\n    //    - Recongize language of selected text,\n    //    - Try to translate selected text,\n    //    - Add selected text and translation to db for particular user,\n    //    - Return translation\n    //    - When the translation is received, translation will be shown in window under the extension logo\n  }\n});\n\n//# sourceURL=webpack:///./src/contextMenuAction.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _memoServices__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./memoServices */ \"./src/memoServices.js\");\n\nchrome.extension.onMessage.addListener(function (msg, sender) {\n  if (msg.action == 'contextClicked') {\n    var memo = msg.payload.selectedText;\n    chrome.identity.getProfileUserInfo(function (userInfo) {\n      var userId = userInfo.id;\n      _memoServices__WEBPACK_IMPORTED_MODULE_0__[\"memoServices\"].addMemo(userId, memo);\n    }); // There should be call to the API:\n    // API should:\n    //    - Recongize language of selected text,\n    //    - Try to translate selected text,\n    //    - Add selected text and translation to db for particular user,\n    //    - Return translation\n    //    - When the translation is received, translation will be shown in window under the extension logo\n  }\n});\n\n//# sourceURL=webpack:///./src/contextMenuAction.js?");
+
+/***/ }),
+
+/***/ "./src/memoServices.js":
+/*!*****************************!*\
+  !*** ./src/memoServices.js ***!
+  \*****************************/
+/*! exports provided: memoServices */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"memoServices\", function() { return memoServices; });\nvar API_URL = 'http://localhost:3000/';\nvar memoServices = {\n  addMemo: addMemo\n};\n\nfunction addMemo(userId, memo) {\n  return postData(\"/user/\".concat(userId, \"/memo\"), {\n    sourceWord: memo\n  });\n}\n\nfunction postData() {\n  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n  return fetch(API_URL + endpoint, {\n    method: \"POST\",\n    headers: {\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify(data) // body data type must match \"Content-Type\" header\n\n  }).then(function (response) {\n    return response.json();\n  }); // parses response to JSON\n}\n\n//# sourceURL=webpack:///./src/memoServices.js?");
 
 /***/ })
 
