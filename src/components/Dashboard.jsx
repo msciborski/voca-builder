@@ -25,17 +25,29 @@ class Dashboard extends Component {
   render() {
     const { memos } = this.state;
 
-    const memosItems = memos.map((memo) =>
-        <li>{memo.sourceWord} => {memo.translatedWord} {memo.isLearned && "(learned)"}</li>
+    const memosRows = memos.map((memo) =>
+        <tr>
+          <td>{memo.sourceWord}</td>
+          <td>{memo.translatedWord}</td>
+          <td>{memo.isLearned && "yeap"}</td>
+        </tr>
     );
 
     return (
         <div className="memos-list">
-            <button onClick={this.loadMemos}>Load memos</button>
-
-            <ul>
-                {memosItems}
-            </ul>
+              <button onClick={this.loadMemos} className="waves-effect waves-light btn"><i className="material-icons left">cloud</i>Load memos</button>
+              <table className="responsive-table striped">
+                <thead>
+                  <tr>
+                      <th>Source word</th>
+                      <th>Translated word</th>
+                      <th>Is learned</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {memosRows}
+                </tbody>
+              </table>
         </div>
     );
   }

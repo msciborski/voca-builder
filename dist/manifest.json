@@ -34,7 +34,8 @@
   "permissions": [
     "contextMenus",
     "identity",
-    "identity.email"
+    "identity.email",
+    "tabs"
   ],
   "oauth2": {
     "client_id": "101633050111-8hv1luijqs04e7vd4eetd8nesselqd9q.apps.googleusercontent.com",
