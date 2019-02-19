@@ -6,7 +6,8 @@ module.exports = {
   watch: 'true',
   entry: {
     background: './src/background.js',
-    'content-script': './src/contextMenuAction.js'
+    'content-script': './src/contextMenuAction.js',
+    'index': './src/index.js'
   },
   module: {
     rules: [

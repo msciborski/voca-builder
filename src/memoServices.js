@@ -8,13 +8,26 @@ function addMemo(userId, memo){
     return postData(`/user/${userId}/memo`, { sourceWord: memo })
 }
 
+
+/**
+ * Helpers
+ */
+
 function postData(endpoint = ``, data = {}) {
+    return request(endpoint, data, 'POST')
+}
+
+function getData(endpoint = ``, data = {}) {
+    return request(endpoint, data)
+}
+
+function request(endpoint = ``, data = {}, method = 'GET'){
     return fetch( API_URL + endpoint, {
-        method: "POST",
+        method: method,
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
+        body: JSON.stringify(data),
     })
-    .then(response => response.json()); // parses response to JSON
+    .then(response => response.json());
 }
