@@ -203,20 +203,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/contextMenuAction.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/actions/contextMenuAction.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/contextMenuAction.js":
-/*!**********************************!*\
-  !*** ./src/contextMenuAction.js ***!
-  \**********************************/
+/***/ "./src/actions/contextMenuAction.js":
+/*!******************************************!*\
+  !*** ./src/actions/contextMenuAction.js ***!
+  \******************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _services_memoServices__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/memoServices */ \"./src/services/memoServices.js\");\n\nchrome.extension.onMessage.addListener(function (msg, sender) {\n  if (msg.action == 'contextClicked') {\n    var memo = msg.payload.selectedText;\n    chrome.identity.getProfileUserInfo(function (userInfo) {\n      var userId = userInfo.id;\n      _services_memoServices__WEBPACK_IMPORTED_MODULE_0__[\"memoServices\"].addMemo(userId, memo);\n    }); // There should be call to the API:\n    // API should:\n    //    - Recongize language of selected text,\n    //    - Try to translate selected text,\n    //    - Add selected text and translation to db for particular user,\n    //    - Return translation\n    //    - When the translation is received, translation will be shown in window under the extension logo\n  }\n});\n\n//# sourceURL=webpack:///./src/contextMenuAction.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _services_memoServices__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/memoServices */ \"./src/services/memoServices.js\");\n\nchrome.extension.onMessage.addListener(function (msg, sender) {\n  if (msg.action == 'contextClicked') {\n    var memo = msg.payload.selectedText;\n    chrome.identity.getProfileUserInfo(function (userInfo) {\n      var userId = userInfo.id;\n      _services_memoServices__WEBPACK_IMPORTED_MODULE_0__[\"memoServices\"].addMemo(userId, memo);\n    }); // There should be call to the API:\n    // API should:\n    //    - Recongize language of selected text,\n    //    - Try to translate selected text,\n    //    - Add selected text and translation to db for particular user,\n    //    - Return translation\n    //    - When the translation is received, translation will be shown in window under the extension logo\n  }\n});\n\n//# sourceURL=webpack:///./src/actions/contextMenuAction.js?");
 
 /***/ }),
 
@@ -228,7 +228,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ser
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"memoServices\", function() { return memoServices; });\nvar API_URL = 'http://localhost:3000/';\nvar memoServices = {\n  addMemo: addMemo,\n  getMemos: getMemos\n};\n\nfunction addMemo(userId, memo) {\n  return postData(\"/user/\".concat(userId, \"/memo\"), {\n    sourceWord: memo\n  });\n}\n\nfunction getMemos(userId) {\n  var memosMock = [{\n    sourceWord: \"dog\",\n    translatedWord: \"pies\",\n    isLearned: false\n  }, {\n    sourceWord: \"sth\",\n    translatedWord: \"sthelse\",\n    isLearned: false\n  }, {\n    sourceWord: \"something\",\n    translatedWord: \"elsething\",\n    isLearned: true\n  }]; // until api is not there\n\n  return memosMock;\n  return getData(\"/user/\".concat(userId, \"/memo\"));\n}\n/**\r\n * Helpers\r\n */\n\n\nfunction postData() {\n  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n  return request(endpoint, data, 'POST');\n}\n\nfunction getData() {\n  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n  return request(endpoint, data);\n}\n\nfunction request() {\n  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n  var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'GET';\n  return fetch(API_URL + endpoint, {\n    method: method,\n    headers: {\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify(data)\n  }).then(function (response) {\n    return response.json();\n  });\n}\n\n//# sourceURL=webpack:///./src/services/memoServices.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"memoServices\", function() { return memoServices; });\nvar API_URL = 'http://localhost:3000/';\nvar memosMock = [{\n  sourceWord: \"dog\",\n  translatedWord: \"pies\",\n  isLearned: false\n}, {\n  sourceWord: \"sth\",\n  translatedWord: \"sthelse\",\n  isLearned: false\n}, {\n  sourceWord: \"something\",\n  translatedWord: \"elsething\",\n  isLearned: true\n}];\nvar memoServices = {\n  addMemo: addMemo,\n  getMemos: getMemos,\n  getLastMemos: getLastMemos\n};\n\nfunction addMemo(userId, memo) {\n  return postData(\"/user/\".concat(userId, \"/memo\"), {\n    sourceWord: memo\n  });\n}\n\nfunction getMemos(userId) {\n  // until api is not there\n  return memosMock;\n  return getData(\"/user/\".concat(userId, \"/memo\"));\n}\n\nfunction getLastMemos(userId) {\n  // until api is not there\n  return memosMock;\n  return getData(\"/user/\".concat(userId, \"/memo\"));\n}\n/**\r\n * Helpers\r\n */\n\n\nfunction postData() {\n  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n  return request(endpoint, data, 'POST');\n}\n\nfunction getData() {\n  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n  return request(endpoint, data);\n}\n\nfunction request() {\n  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n  var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'GET';\n  return fetch(API_URL + endpoint, {\n    method: method,\n    headers: {\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify(data)\n  }).then(function (response) {\n    return response.json();\n  });\n}\n\n//# sourceURL=webpack:///./src/services/memoServices.js?");
 
 /***/ })
 

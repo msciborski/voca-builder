@@ -1,8 +1,27 @@
 const API_URL = 'http://localhost:3000/';
 
+const memosMock = [
+    {
+        sourceWord: "dog",
+        translatedWord: "pies",
+        isLearned: false,
+    },
+    {
+        sourceWord: "sth",
+        translatedWord: "sthelse",
+        isLearned: false,
+    },
+    {
+        sourceWord: "something",
+        translatedWord: "elsething",
+        isLearned: true,
+    }
+];
+
 export const memoServices = {
     addMemo,
-    getMemos
+    getMemos,
+    getLastMemos
 }
 
 function addMemo(userId, memo){
@@ -10,24 +29,14 @@ function addMemo(userId, memo){
 }
 
 function getMemos(userId){
+    
+    // until api is not there
+    return memosMock;
 
-    let memosMock = [
-        {
-            sourceWord: "dog",
-            translatedWord: "pies",
-            isLearned: false,
-        },
-        {
-            sourceWord: "sth",
-            translatedWord: "sthelse",
-            isLearned: false,
-        },
-        {
-            sourceWord: "something",
-            translatedWord: "elsething",
-            isLearned: true,
-        }
-    ];
+    return getData(`/user/${userId}/memo`)
+}
+
+function getLastMemos(userId){
     
     // until api is not there
     return memosMock;

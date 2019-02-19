@@ -1,4 +1,4 @@
-import {memoServices} from './services/memoServices';
+import {memoServices} from '../services/memoServices';
 
 chrome.extension.onMessage.addListener((msg, sender) => {
   if(msg.action == 'contextClicked') {
