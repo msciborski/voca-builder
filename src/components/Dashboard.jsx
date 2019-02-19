@@ -6,7 +6,7 @@ class Dashboard extends Component {
     super();
     this.state = {
         userId: null,
-        memos: []
+        memos: null
     };
     this.loadMemos = this.loadMemos.bind(this);
 
@@ -14,6 +14,10 @@ class Dashboard extends Component {
     chrome.identity.getProfileUserInfo((userInfo) => {
       this.setState({ userId: userInfo.id });
     });
+  }
+
+  componentDidMount() {
+    this.loadMemos();
   }
 
   loadMemos() {
@@ -24,18 +28,23 @@ class Dashboard extends Component {
   
   render() {
     const { memos } = this.state;
+    let memosRows;
 
-    const memosRows = memos.map((memo) =>
-        <tr>
-          <td>{memo.sourceWord}</td>
-          <td>{memo.translatedWord}</td>
-          <td>{memo.isLearned && "yeap"}</td>
-        </tr>
-    );
+    if( memos ){
+      memosRows = memos.map((memo) =>
+          <tr>
+            <td>{memo.sourceWord}</td>
+            <td>{memo.translatedWord}</td>
+            <td>{memo.isLearned && "yeap"}</td>
+          </tr>
+      );
+    } else {
+      memosRows = "Loading";
+    }
+    
 
     return (
         <div className="memos-list">
-              <button onClick={this.loadMemos} className="waves-effect waves-light btn blue darken-4"><i className="material-icons left">cloud</i>Load memos</button>
               <table className="responsive-table striped">
                 <thead>
                   <tr>

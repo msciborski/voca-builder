@@ -29,6 +29,7 @@ function getMemos(userId){
         }
     ];
     
+    // until api is not there
     return memosMock;
 
     return getData(`/user/${userId}/memo`)
