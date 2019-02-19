@@ -35,7 +35,7 @@ class Dashboard extends Component {
 
     return (
         <div className="memos-list">
-              <button onClick={this.loadMemos} className="waves-effect waves-light btn"><i className="material-icons left">cloud</i>Load memos</button>
+              <button onClick={this.loadMemos} className="waves-effect waves-light btn blue darken-4"><i className="material-icons left">cloud</i>Load memos</button>
               <table className="responsive-table striped">
                 <thead>
                   <tr>
