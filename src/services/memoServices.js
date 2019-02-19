@@ -1,11 +1,37 @@
 const API_URL = 'http://localhost:3000/';
 
 export const memoServices = {
-    addMemo
+    addMemo,
+    getMemos
 }
 
 function addMemo(userId, memo){
     return postData(`/user/${userId}/memo`, { sourceWord: memo })
+}
+
+function getMemos(userId){
+
+    let memosMock = [
+        {
+            sourceWord: "dog",
+            translatedWord: "pies",
+            isLearned: false,
+        },
+        {
+            sourceWord: "sth",
+            translatedWord: "sthelse",
+            isLearned: false,
+        },
+        {
+            sourceWord: "something",
+            translatedWord: "elsething",
+            isLearned: true,
+        }
+    ];
+    
+    return memosMock;
+
+    return getData(`/user/${userId}/memo`)
 }
 
 

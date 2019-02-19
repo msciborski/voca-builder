@@ -1,33 +1,24 @@
 import React, { Component } from "react";
+import {memoServices} from '../services/memoServices';
 
 class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
+        userId: null,
         memos: []
     };
     this.loadMemos = this.loadMemos.bind(this);
+
+    //TODO it shoudn't be here
+    chrome.identity.getProfileUserInfo((userInfo) => {
+      this.setState({ userId: userInfo.id });
+    });
   }
 
   loadMemos() {
-    let memos = [
-        {
-            sourceWord: "dog",
-            translatedWord: "pies",
-            isLearned: false,
-        },
-        {
-            sourceWord: "sth",
-            translatedWord: "sthelse",
-            isLearned: false,
-        },
-        {
-            sourceWord: "something",
-            translatedWord: "elsething",
-            isLearned: true,
-        }
-    ];
-
+    const { userId } = this.state;
+    let memos = memoServices.getMemos( userId );
     this.setState({ memos: memos });
   }
   
