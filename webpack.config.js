@@ -6,7 +6,8 @@ module.exports = {
   watch: 'true',
   entry: {
     background: './src/background.js',
-    'content-script': './src/contextMenuAction.js'
+    'content-script': './src/actions/contextMenuAction.js',
+    'index': './src/index.js'
   },
   module: {
     rules: [
@@ -31,6 +32,10 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "./index.html"
+    }),
+    new HtmlWebPackPlugin({
+      template: "./src/popup.html",
+      filename: "./popup.html"
     }),
     new ChromeExtensionReloader({
       port: 9090, // Which port use to create the server
