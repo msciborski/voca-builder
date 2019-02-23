@@ -3,7 +3,8 @@ import {memoServices} from '../services/memoServices';
 chrome.extension.onMessage.addListener((msg, sender) => {
   if(msg.action == 'contextClicked') {
     let memo = msg.payload.selectedText;
-
+    const { user } = localStorage;
+    memoServices.addMemo(user._id, selectedText);
     // chrome.identity.getProfileUserInfo((userInfo) => {
     //   let userId = userInfo.id;
     //   memoServices.addMemo( userId, memo );

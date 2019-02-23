@@ -7,7 +7,7 @@ chrome.windows.onCreated.addListener(() => {
         if (response.status == 400) {
           addUser(userInfo);
         }
-        localStorage.userId = response.body;
+        localStorage.setItem('user', JSON.stringify(response.data));
       }).catch(err => alert(err));
   });
 });

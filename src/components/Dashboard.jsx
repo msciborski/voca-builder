@@ -20,8 +20,8 @@ class Dashboard extends Component {
   }
 
   loadMemos = () => {
-    const { userId } = this.state;
-    let memos = memoServices.getMemos( userId );
+    const { _id } = JSON.parse(localStorage.getItem(user));
+    let memos = memoServices.getMemos(_id);
     this.setState({ memos: memos });
   }
 
