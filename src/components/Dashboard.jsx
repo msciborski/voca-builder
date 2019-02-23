@@ -8,7 +8,6 @@ class Dashboard extends Component {
         userId: null,
         memos: null
     };
-    this.loadMemos = this.loadMemos.bind(this);
 
     //TODO it shoudn't be here
     chrome.identity.getProfileUserInfo((userInfo) => {
@@ -20,12 +19,12 @@ class Dashboard extends Component {
     this.loadMemos();
   }
 
-  loadMemos() {
+  loadMemos = () => {
     const { userId } = this.state;
     let memos = memoServices.getMemos( userId );
     this.setState({ memos: memos });
   }
-  
+
   render() {
     const { memos } = this.state;
     let memosRows;
@@ -41,7 +40,7 @@ class Dashboard extends Component {
     } else {
       memosRows = "Loading";
     }
-    
+
 
     return (
         <div className="memos-list">

@@ -1,5 +1,15 @@
+import { getUser, addUser } from "./services/userServices";
+
 chrome.windows.onCreated.addListener(() => {
-  alert('Extension wita!');
+  chrome.identity.getProfileUserInfo((userInfo) => {
+    getUser(userInfo.id)
+      .then(response => {
+        if (response.status == 400) {
+          addUser(userInfo);
+        }
+        localStorage.userId = response.body;
+      }).catch(err => alert(err));
+  });
 });
 
 chrome.contextMenus.removeAll();
@@ -10,7 +20,6 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  console.log(info, tab);
   chrome.extension.sendMessage({
     action: 'contextClicked',
     payload: {
