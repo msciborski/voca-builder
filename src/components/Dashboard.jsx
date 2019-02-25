@@ -4,15 +4,12 @@ import {memoServices} from '../services/memoServices';
 class Dashboard extends Component {
   constructor() {
     super();
+    const { _id } = JSON.parse(localStorage.getItem('user'));
+    console.log(_id);
     this.state = {
-        userId: null,
+        userId: _id,
         memos: null
     };
-
-    //TODO it shoudn't be here
-    chrome.identity.getProfileUserInfo((userInfo) => {
-      this.setState({ userId: userInfo.id });
-    });
   }
 
   componentDidMount() {
@@ -20,7 +17,6 @@ class Dashboard extends Component {
   }
 
   loadMemos = () => {
-    const { _id } = JSON.parse(localStorage.getItem(user));
     let memos = memoServices.getMemos(_id);
     this.setState({ memos: memos });
   }

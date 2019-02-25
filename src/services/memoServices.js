@@ -3,10 +3,11 @@ import { getData, postData } from "../helpers/helperRequest";
 export const memoServices = {
     addMemo,
     getMemos,
-    getLastMemos
+    getLastMemos,
 }
 
 function addMemo(userId, memo) {
+    console.log(`/user/${userId}/memo`);
     return postData(`/user/${userId}/memo`, { sourceWord: memo })
 }
 

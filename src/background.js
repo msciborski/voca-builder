@@ -26,7 +26,6 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       selectedText: info.selectionText
     }
   })
-  chrome.tabs.create({ url: "chrome://newtab" });
 });
 
 chrome.commands.onCommand.addListener(function(command) {

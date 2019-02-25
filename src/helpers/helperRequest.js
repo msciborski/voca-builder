@@ -8,11 +8,9 @@ const axiosInstance = axios.create({
 });
 
 export function postData(endpoint = ``, data = {}) {
-  console.log(config.development.apiUrl);
   return axiosInstance.post(endpoint, data);
 }
 
 export function getData(endpoint = ``) {
-  console.log(config.development.apiUrl);
   return axiosInstance.get(endpoint);
 }
