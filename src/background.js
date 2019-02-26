@@ -1,4 +1,7 @@
 import { getUser, addUser } from "./services/userServices";
+import { memoServices } from "./services/memoServices";
+
+chrome.contextMenus.removeAll();
 
 chrome.windows.onCreated.addListener(() => {
   chrome.identity.getProfileUserInfo((userInfo) => {
@@ -12,7 +15,6 @@ chrome.windows.onCreated.addListener(() => {
   });
 });
 
-chrome.contextMenus.removeAll();
 chrome.contextMenus.create({
   id: 'addToMemo',
   title: 'Add word to memo',
@@ -20,12 +22,9 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  chrome.extension.sendMessage({
-    action: 'contextClicked',
-    payload: {
-      selectedText: info.selectionText
-    }
-  })
+    const { _id } = JSON.parse(localStorage.getItem('user'));
+    memoServices.addMemo(_id, info.selectionText).then(translatedMemo => {
+    });
 });
 
 chrome.commands.onCommand.addListener(function(command) {
