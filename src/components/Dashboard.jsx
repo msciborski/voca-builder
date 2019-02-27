@@ -5,7 +5,6 @@ class Dashboard extends Component {
   constructor() {
     super();
     const { _id } = JSON.parse(localStorage.getItem('user'));
-    console.log(_id);
     this.state = {
         userId: _id,
         memos: null
@@ -17,8 +16,10 @@ class Dashboard extends Component {
   }
 
   loadMemos = () => {
-    let memos = memoServices.getMemos(_id);
-    this.setState({ memos: memos });
+    const { userId } = this.state;
+    memoServices.getLastMemos(userId).then(response => {
+      this.setState({ memos: response.data });
+    });
   }
 
   render() {
@@ -40,18 +41,18 @@ class Dashboard extends Component {
 
     return (
         <div className="memos-list">
-              <table className="responsive-table striped">
-                <thead>
-                  <tr>
-                      <th>Source word</th>
-                      <th>Translated word</th>
-                      <th>Is learned</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {memosRows}
-                </tbody>
-              </table>
+          <table className="responsive-table striped">
+            <thead>
+              <tr>
+                  <th><strong>Source word</strong></th>
+                  <th><strong>Translated word</strong></th>
+                  <th><strong>Is learned</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              {memosRows}
+            </tbody>
+          </table>
         </div>
     );
   }
