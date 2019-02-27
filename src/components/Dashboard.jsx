@@ -5,12 +5,8 @@ import { memoServices } from '../services/memoServices';
 class Dashboard extends Component {
   constructor() {
     super();
-<<<<<<< HEAD
     const { _id, sourceLanguage, destinationLanguage } = JSON.parse(localStorage.getItem('user'));
     console.log(_id);
-=======
-    const { _id } = JSON.parse(localStorage.getItem('user'));
->>>>>>> origin/master
     this.state = {
         userId: _id,
         sourceLanguage,
@@ -48,7 +44,6 @@ class Dashboard extends Component {
 
 
     return (
-<<<<<<< HEAD
       <DashboardNavbar brand="Voca-builder" />
         // <div className="memos-list">
         //       <table className="responsive-table striped">
@@ -64,22 +59,6 @@ class Dashboard extends Component {
         //         </tbody>
         //       </table>
         // </div>
-=======
-        <div className="memos-list">
-          <table className="responsive-table striped">
-            <thead>
-              <tr>
-                  <th><strong>Source word</strong></th>
-                  <th><strong>Translated word</strong></th>
-                  <th><strong>Is learned</strong></th>
-              </tr>
-            </thead>
-            <tbody>
-              {memosRows}
-            </tbody>
-          </table>
-        </div>
->>>>>>> origin/master
     );
   }
 }
