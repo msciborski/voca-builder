@@ -529,6 +529,18 @@ eval("// shim for using process in browser\nvar process = module.exports = {};\n
 
 /***/ }),
 
+/***/ "./src/actions/contextMenuAction.js":
+/*!******************************************!*\
+  !*** ./src/actions/contextMenuAction.js ***!
+  \******************************************/
+/*! exports provided: openPopupWithTranslatedWord */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"openPopupWithTranslatedWord\", function() { return openPopupWithTranslatedWord; });\nfunction openPopupWithTranslatedWord(memo) {\n  var popup = document.createElement('div');\n  popup.id = 'vocabuilder_popup';\n  popup.innerHTML = memo.sourceWord + ' => ' + memo.translatedWord;\n  popup.style.position = 'fixed';\n  popup.style.background = '#fff';\n  popup.style.border = '1px solid #e0e0e0';\n  popup.style.right = '20px';\n  popup.style.top = '20px';\n  popup.style.zIndex = '9999';\n  popup.style.fontSize = '16px';\n  popup.style.padding = '20px 80px';\n  document.body.appendChild(popup);\n} // Listen for messages\n\nchrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {\n  if (msg.type == 'memo_added' && msg.memo) {\n    openPopupWithTranslatedWord(msg.memo);\n  }\n});\n\n//# sourceURL=webpack:///./src/actions/contextMenuAction.js?");
+
+/***/ }),
+
 /***/ "./src/background.js":
 /*!***************************!*\
   !*** ./src/background.js ***!
@@ -537,7 +549,7 @@ eval("// shim for using process in browser\nvar process = module.exports = {};\n
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _services_userServices__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/userServices */ \"./src/services/userServices.js\");\n/* harmony import */ var _services_memoServices__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/memoServices */ \"./src/services/memoServices.js\");\n\n\nchrome.contextMenus.removeAll();\nchrome.windows.onCreated.addListener(function () {\n  chrome.identity.getProfileUserInfo(function (userInfo) {\n    Object(_services_userServices__WEBPACK_IMPORTED_MODULE_0__[\"getUser\"])(userInfo.id).then(function (response) {\n      if (response.status == 400) {\n        Object(_services_userServices__WEBPACK_IMPORTED_MODULE_0__[\"addUser\"])(userInfo);\n      }\n\n      localStorage.setItem('user', JSON.stringify(response.data));\n    }).catch(function (err) {\n      return alert(err);\n    });\n  });\n});\nchrome.contextMenus.create({\n  id: 'addToMemo',\n  title: 'Add word to memo',\n  contexts: ['selection']\n});\nchrome.contextMenus.onClicked.addListener(function (info, tab) {\n  var _JSON$parse = JSON.parse(localStorage.getItem('user')),\n      _id = _JSON$parse._id;\n\n  _services_memoServices__WEBPACK_IMPORTED_MODULE_1__[\"memoServices\"].addMemo(_id, info.selectionText).then(function (translatedMemo) {});\n});\nchrome.commands.onCommand.addListener(function (command) {\n  console.log('Command:', command);\n});\n\n//# sourceURL=webpack:///./src/background.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _services_userServices__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/userServices */ \"./src/services/userServices.js\");\n/* harmony import */ var _services_memoServices__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/memoServices */ \"./src/services/memoServices.js\");\n/* harmony import */ var _actions_contextMenuAction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions/contextMenuAction */ \"./src/actions/contextMenuAction.js\");\n\n\n\nchrome.contextMenus.removeAll();\nchrome.windows.onCreated.addListener(function () {\n  chrome.identity.getProfileUserInfo(function (userInfo) {\n    Object(_services_userServices__WEBPACK_IMPORTED_MODULE_0__[\"getUser\"])(userInfo.id).then(function (response) {\n      if (response.status == 400) {\n        Object(_services_userServices__WEBPACK_IMPORTED_MODULE_0__[\"addUser\"])(userInfo);\n      }\n\n      localStorage.setItem('user', JSON.stringify(response.data));\n    }).catch(function (err) {\n      return alert(err);\n    });\n  });\n});\nchrome.contextMenus.create({\n  id: 'addToMemo',\n  title: 'Add word to memo',\n  contexts: ['selection']\n});\nchrome.contextMenus.onClicked.addListener(function (info, tab) {\n  var _JSON$parse = JSON.parse(localStorage.getItem('user')),\n      _id = _JSON$parse._id;\n\n  _services_memoServices__WEBPACK_IMPORTED_MODULE_1__[\"memoServices\"].addMemo(_id, info.selectionText).then(function (response) {\n    chrome.tabs.sendMessage(tab.id, {\n      type: 'memo_added',\n      memo: response.data\n    });\n  });\n});\nchrome.commands.onCommand.addListener(function (command) {\n  console.log('Command:', command);\n});\n\n//# sourceURL=webpack:///./src/background.js?");
 
 /***/ }),
 

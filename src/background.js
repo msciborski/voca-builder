@@ -1,5 +1,6 @@
 import { getUser, addUser } from "./services/userServices";
 import { memoServices } from "./services/memoServices";
+import { openPopupWithTranslatedWord } from "./actions/contextMenuAction";
 
 chrome.contextMenus.removeAll();
 
@@ -22,8 +23,10 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+  
     const { _id } = JSON.parse(localStorage.getItem('user'));
-    memoServices.addMemo(_id, info.selectionText).then(translatedMemo => {
+    memoServices.addMemo(_id, info.selectionText).then(response => {
+      chrome.tabs.sendMessage(tab.id, {type: 'memo_added', memo: response.data});
     });
 });
 
