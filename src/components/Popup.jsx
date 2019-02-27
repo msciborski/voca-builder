@@ -17,7 +17,7 @@ class Dashboard extends Component {
 
   loadMemos = () => {
     const { userId } = this.state;
-    let memos = memoServices.getLastMemos(userId).then(response => {
+    memoServices.getLastMemos(userId).then(response => {
       this.setState({ memos: response.data });
     });
   }
