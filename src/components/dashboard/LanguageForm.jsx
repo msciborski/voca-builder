@@ -10,6 +10,8 @@ const styles = theme => ({
   },
   formControl: {
     minWidth: 100,
+    display: 'flex',
+    flexDirection: 'row',
   },
 });
 

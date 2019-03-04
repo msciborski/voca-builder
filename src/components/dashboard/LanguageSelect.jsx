@@ -3,10 +3,13 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 
 const styles = {
-
+  select: {
+    margin: 10,
+  }
 };
 const LanguageSelect = (props) => {
   const {
+    classes,
     languages,
     name,
     id,
@@ -23,31 +26,12 @@ const LanguageSelect = (props) => {
         name: name,
         id: id,
       }}
+      className={classes.select}
       value={value}
       onChange={updateLanguage}
     >
       {menuItems && menuItems}
     </Select>
-    // <form autoComplete="false" className={classes.root}>
-    //   <FormControl className={classes.formControl}>
-    //     <Select
-    //       inputProps = {{
-    //         name: 'sourcelanguage',
-    //         id: 'source-language',
-    //       }}
-    //       >
-    //         {menuItems}
-    //       </Select>
-    //       <Select
-    //         inputProps= {{
-    //           name: 'destinationLanguage',
-    //           id: 'destination-language',
-    //         }}
-    //       >
-    //         {menuItems}
-    //       </Select>
-    //   </FormControl>
-    // </form>
   );
 }
 
