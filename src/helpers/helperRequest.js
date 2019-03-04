@@ -14,3 +14,7 @@ export function postData(endpoint = ``, data = {}) {
 export function getData(endpoint = ``) {
   return axiosInstance.get(endpoint);
 }
+
+export function updateData(endpoint=``, data = {}) {
+  return axiosInstance.put(endpoint, data);
+}

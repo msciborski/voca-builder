@@ -1,24 +1,48 @@
-import React, { Component } from "react";
-import DashboardNavbar from "./dashboard/DashboardNavbar.jsx";
+import React from "react";
 import { memoServices } from '../services/memoServices';
+import { utilsService } from "../services/utilsService";
+import { userService } from "../services/userServices";
+import AppBarDashboard from "./dashboard/AppBarDashboard.jsx";
+import MemoList from "./dashboard/MemoList.jsx";
+import { Grid } from "@material-ui/core";
 
-class Dashboard extends Component {
+class Dashboard extends React.Component {
   constructor() {
     super();
     const { _id, sourceLanguage, destinationLanguage } = JSON.parse(localStorage.getItem('user'));
-    console.log(_id);
     this.state = {
-        userId: _id,
-        sourceLanguage,
-        destinationLanguage,
-        memos: null
+      userId: _id,
+      sourceLanguage,
+      destinationLanguage,
+      languages: null,
+      memos: null,
     };
   }
 
   componentDidMount() {
     this.loadMemos();
+    this.loadLanguages();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { sourceLanguage, destinationLanguage, userId } = this.state;
+    userService.updateUser(userId, { sourceLanguage, destinationLanguage }).catch(error => alert(error));
+
+
+  }
+
+  loadLanguages = () => {
+    console.log('Load languages');
+    utilsService.getLanguages().then(response => {
+      console.log(response);
+      this.setState({ languages: response.data });
+    });
+  }
+
+  updateLanguage = (event) => {
+    console.log(`Update language: ${event.target.name}, ${event.target.value}`);
+    this.setState({ [event.target.name]: event.target.value });
+  }
   loadMemos = () => {
     const { userId } = this.state;
     memoServices.getLastMemos(userId).then(response => {
@@ -27,38 +51,29 @@ class Dashboard extends Component {
   }
 
   render() {
-    // const { memos } = this.state;
-    // let memosRows;
-
-    // if( memos ){
-    //   memosRows = memos.map((memo) =>
-    //       <tr>
-    //         <td>{memo.sourceWord}</td>
-    //         <td>{memo.translatedWord}</td>
-    //         <td>{memo.isLearned && "yeap"}</td>
-    //       </tr>
-    //   );
-    // } else {
-    //   memosRows = "Loading";
-    // }
-
+    const { languages, sourceLanguage, destinationLanguage, memos } = this.state;
 
     return (
-      <DashboardNavbar brand="Voca-builder" />
-        // <div className="memos-list">
-        //       <table className="responsive-table striped">
-        //         <thead>
-        //           <tr>
-        //               <th>Source word</th>
-        //               <th>Translated word</th>
-        //               <th>Is learned</th>
-        //           </tr>
-        //         </thead>
-        //         <tbody>
-        //           {memosRows}
-        //         </tbody>
-        //       </table>
-        // </div>
+      <Grid container>
+        <Grid item xs="12">
+          {
+            languages &&
+            <AppBarDashboard
+              languages={languages}
+              updateLanguage={this.updateLanguage}
+              sourceValue={sourceLanguage}
+              destinationValue={destinationLanguage}
+            />
+          }
+        </Grid>
+        <Grid item xs="12">
+          {
+            memos && <MemoList memos={memos} />
+          }
+        </Grid>
+      </Grid>
+
+
     );
   }
 }
