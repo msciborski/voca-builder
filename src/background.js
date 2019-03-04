@@ -1,14 +1,14 @@
-import { getUser, addUser } from "./services/userServices";
+import { userService } from "./services/userServices";
 import { memoServices } from "./services/memoServices";
 
 chrome.contextMenus.removeAll();
 
 chrome.windows.onCreated.addListener(() => {
   chrome.identity.getProfileUserInfo((userInfo) => {
-    getUser(userInfo.id)
+    userService.getUser(userInfo.id)
       .then(response => {
         if (response.status == 400) {
-          addUser(userInfo);
+          userService.addUser(userInfo);
         }
         localStorage.setItem('user', JSON.stringify(response.data));
       }).catch(err => alert(err));
