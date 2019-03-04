@@ -1,7 +1,8 @@
-export function openPopupWithTranslatedWord(memo){
+import { memoServices } from "../services/memoServices";
+
+export function openPopupWithTranslatedWord(userId, info){
   var popup = document.createElement('div');
   popup.id = 'vocabuilder_popup';
-  popup.innerHTML = memo.sourceWord + ' => ' + memo.translatedWord;
 
   popup.style.position = 'fixed';
   popup.style.background = '#fff';
@@ -11,13 +12,18 @@ export function openPopupWithTranslatedWord(memo){
   popup.style.zIndex = '9999';
   popup.style.fontSize = '16px';
   popup.style.padding = '20px 80px';
-  document.body.appendChild(popup)
+  document.body.appendChild(popup);
+  
+  memoServices.addMemo(userId, info.selectionText).then(response => { 
+    var memo = response.data;
+    popup.innerHTML = memo.sourceWord + ' => ' + memo.translatedWord;
+  });
 }
 
 
 // Listen for messages
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  if (msg.type == 'memo_added' && msg.memo) {
-    openPopupWithTranslatedWord(msg.memo);
+chrome.runtime.onMessage.addListener(function (action, sender, sendResponse) {
+  if (action.type == 'add_memo') {
+    openPopupWithTranslatedWord(action.userId, action.info);
   }
 });
