@@ -3,6 +3,8 @@ import { memoServices } from '../services/memoServices';
 import { utilsService } from "../services/utilsService";
 import { userService } from "../services/userServices";
 import AppBarDashboard from "./dashboard/AppBarDashboard.jsx";
+import MemoList from "./dashboard/MemoList.jsx";
+import { Grid } from "@material-ui/core";
 
 class Dashboard extends React.Component {
   constructor() {
@@ -49,21 +51,29 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { languages, sourceLanguage, destinationLanguage } = this.state;
-    console.log(`Souce: ${sourceLanguage}, destinatin: ${destinationLanguage}`)
-    console.log(`source`)
+    const { languages, sourceLanguage, destinationLanguage, memos } = this.state;
+
     return (
-      <div>
-        {
-          languages &&
-          <AppBarDashboard
-            languages={languages}
-            updateLanguage={this.updateLanguage}
-            sourceValue={sourceLanguage}
-            destinationValue={destinationLanguage}
-          />
-        }
-      </div>
+      <Grid container>
+        <Grid item xs="12">
+          {
+            languages &&
+            <AppBarDashboard
+              languages={languages}
+              updateLanguage={this.updateLanguage}
+              sourceValue={sourceLanguage}
+              destinationValue={destinationLanguage}
+            />
+          }
+        </Grid>
+        <Grid item xs="12">
+          {
+            memos && <MemoList memos={memos} />
+          }
+        </Grid>
+      </Grid>
+
+
     );
   }
 }

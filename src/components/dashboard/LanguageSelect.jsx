@@ -1,11 +1,17 @@
 import React from "react";
-import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import { FormControl, InputLabel, Select, MenuItem, Input } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 
 const styles = {
   select: {
     margin: 10,
-  }
+    color: 'inherit',
+  },
+  icon: {
+    fill: 'white',
+  },
+  underline: {
+  },
 };
 const LanguageSelect = (props) => {
   const {
@@ -22,9 +28,14 @@ const LanguageSelect = (props) => {
 
   return (
     <Select
+      input={ <Input classes={{ underline: classes.underline }}/> }
       inputProps = {{
         name: name,
         id: id,
+        classes: {
+          icon: classes.icon,
+          underline: classes.underline,
+        }
       }}
       className={classes.select}
       value={value}

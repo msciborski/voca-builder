@@ -27,7 +27,7 @@ const LanguageForm = (props) => {
     sourceValue,
     destinationValue,
   } = props;
-  console.log(sourceName);
+
   return (
     <form className={classes.root}>
       <FormControl className={classes.formControl}>
