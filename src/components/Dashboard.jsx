@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
     const { languages, sourceLanguage, destinationLanguage, memos } = this.state;
 
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={theme}></MuiThemeProvider>
         <Grid container>
           <Grid item xs="12">
             {
