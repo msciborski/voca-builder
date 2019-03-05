@@ -4,8 +4,8 @@ import { utilsService } from "../services/utilsService";
 import { userService } from "../services/userServices";
 import AppBarDashboard from "./dashboard/AppBarDashboard.jsx";
 import MemoList from "./dashboard/MemoList.jsx";
-import { Grid } from "@material-ui/core";
-
+import { Grid, MuiThemeProvider } from "@material-ui/core";
+import { theme } from "./theme";
 class Dashboard extends React.Component {
   constructor() {
     super();
@@ -32,7 +32,6 @@ class Dashboard extends React.Component {
   }
 
   loadLanguages = () => {
-    console.log('Load languages');
     utilsService.getLanguages().then(response => {
       console.log(response);
       this.setState({ languages: response.data });
@@ -40,7 +39,6 @@ class Dashboard extends React.Component {
   }
 
   updateLanguage = (event) => {
-    console.log(`Update language: ${event.target.name}, ${event.target.value}`);
     this.setState({ [event.target.name]: event.target.value });
   }
   loadMemos = () => {
@@ -54,25 +52,26 @@ class Dashboard extends React.Component {
     const { languages, sourceLanguage, destinationLanguage, memos } = this.state;
 
     return (
-      <Grid container>
-        <Grid item xs="12">
-          {
-            languages &&
-            <AppBarDashboard
-              languages={languages}
-              updateLanguage={this.updateLanguage}
-              sourceValue={sourceLanguage}
-              destinationValue={destinationLanguage}
-            />
-          }
+      <MuiThemeProvider theme={theme}>
+        <Grid container>
+          <Grid item xs="12">
+            {
+              languages &&
+              <AppBarDashboard
+                languages={languages}
+                updateLanguage={this.updateLanguage}
+                sourceValue={sourceLanguage}
+                destinationValue={destinationLanguage}
+              />
+            }
+          </Grid>
+          <Grid item xs="12">
+            {
+              memos && <MemoList memos={memos} />
+            }
+          </Grid>
         </Grid>
-        <Grid item xs="12">
-          {
-            memos && <MemoList memos={memos} />
-          }
-        </Grid>
-      </Grid>
-
+      </MuiThemeProvider>
 
     );
   }

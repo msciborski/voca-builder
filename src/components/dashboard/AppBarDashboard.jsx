@@ -3,7 +3,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from '@material-ui/core/Typography';
 import LanguageForm from "./LanguageForm.jsx";
+import { withStyles } from "@material-ui/styles";
 
+const style = theme => ({
+  root: {
+    backgroundColor: theme.pallete.primary,
+  }
+});
 
 const AppBarDashboard = (props) => {
   const {
@@ -11,13 +17,12 @@ const AppBarDashboard = (props) => {
     updateLanguage,
     sourceValue,
     destinationValue,
+    classes,
   } = props;
 
-  console.log('AppBarDashboard')
-  console.log(languages);
   return (
     <div className>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.root}>
         <Toolbar>
           <Typography variant="h6" color="inherit">
             Voca-builder
@@ -38,5 +43,5 @@ const AppBarDashboard = (props) => {
   );
 }
 
-export default AppBarDashboard;
+export default withStyles(style)(AppBarDashboard);
 
